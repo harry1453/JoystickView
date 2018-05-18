@@ -1,70 +1,55 @@
 package com.ravensoft.daniel.joysticktest;
 
 import android.content.Context;
-import android.graphics.AvoidXfermode;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PorterDuff;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
-/**
- * Created by Daniel on 7/25/2016.
- */
 public class JoystickView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener
 {
     private float centerX;
     private float centerY;
     private float baseRadius;
     private float hatRadius;
-    private JoystickListener joystickCallback;
     private final int ratio = 5; //The smaller, the more shading will occur
 
-    private void setupDimensions()
-    {
+    @Nullable
+    private JoystickListener joystickListener;
+
+    private void setupDimensions() {
         centerX = getWidth() / 2;
         centerY = getHeight() / 2;
         baseRadius = Math.min(getWidth(), getHeight()) / 3;
         hatRadius = Math.min(getWidth(), getHeight()) / 5;
     }
 
-    public JoystickView(Context context)
-    {
+    public JoystickView(Context context) {
         super(context);
         getHolder().addCallback(this);
         setOnTouchListener(this);
-        if(context instanceof JoystickListener)
-            joystickCallback = (JoystickListener) context;
     }
 
-    public JoystickView(Context context, AttributeSet attributes, int style)
-    {
+    public JoystickView(Context context, AttributeSet attributes, int style) {
         super(context, attributes, style);
         getHolder().addCallback(this);
         setOnTouchListener(this);
-        if(context instanceof JoystickListener)
-            joystickCallback = (JoystickListener) context;
     }
 
-    public JoystickView (Context context, AttributeSet attributes)
-    {
+    public JoystickView(Context context, AttributeSet attributes) {
         super(context, attributes);
         getHolder().addCallback(this);
         setOnTouchListener(this);
-        if(context instanceof JoystickListener)
-            joystickCallback = (JoystickListener) context;
     }
 
-    private void drawJoystick(float newX, float newY)
-    {
-        if(getHolder().getSurface().isValid())
-        {
+    private void drawJoystick(float newX, float newY) {
+        if(getHolder().getSurface().isValid()) {
             Canvas myCanvas = this.getHolder().lockCanvas(); //Stuff to draw
             Paint colors = new Paint();
             myCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); // Clear the BG
@@ -96,8 +81,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder)
-    {
+    public void surfaceCreated(SurfaceHolder holder) {
         setupDimensions();
         drawJoystick(centerX, centerY);
     }
@@ -116,13 +100,13 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     {
         if(v.equals(this))
         {
-            if(e.getAction() != e.ACTION_UP)
+            if(e.getAction() != MotionEvent.ACTION_UP)
             {
                 float displacement = (float) Math.sqrt((Math.pow(e.getX() - centerX, 2)) + Math.pow(e.getY() - centerY, 2));
                 if(displacement < baseRadius)
                 {
                     drawJoystick(e.getX(), e.getY());
-                    joystickCallback.onJoystickMoved((e.getX() - centerX)/baseRadius, (e.getY() - centerY)/baseRadius, getId());
+                    updateListener((e.getX() - centerX)/baseRadius, (e.getY() - centerY)/baseRadius);
                 }
                 else
                 {
@@ -130,18 +114,28 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
                     float constrainedX = centerX + (e.getX() - centerX) * ratio;
                     float constrainedY = centerY + (e.getY() - centerY) * ratio;
                     drawJoystick(constrainedX, constrainedY);
-                    joystickCallback.onJoystickMoved((constrainedX-centerX)/baseRadius, (constrainedY-centerY)/baseRadius, getId());
+                    updateListener((constrainedX-centerX)/baseRadius, (constrainedY-centerY)/baseRadius);
                 }
             }
-            else
+            else {
                 drawJoystick(centerX, centerY);
-                joystickCallback.onJoystickMoved(0,0,getId());
+                updateListener(0,0);
+            }
         }
         return true;
     }
 
-    public interface JoystickListener
-    {
+    private void updateListener(float xPercent, float yPercent) {
+        if (joystickListener != null) {
+            joystickListener.onJoystickMoved(xPercent, yPercent, getId());
+        }
+    }
+
+    public void setJoystickListener(@Nullable JoystickListener joystickListener) {
+        this.joystickListener = joystickListener;
+    }
+
+    public interface JoystickListener {
         void onJoystickMoved(float xPercent, float yPercent, int id);
     }
 }
