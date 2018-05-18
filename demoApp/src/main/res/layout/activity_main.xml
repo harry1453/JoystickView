@@ -10,13 +10,13 @@
     android:orientation="horizontal"
     tools:context="com.ravensoft.daniel.joysticktest.MainActivity">
 
-    <com.ravensoft.daniel.joysticktest.JoystickView
+    <com.harrysoft.joystickview.JoystickView
         android:layout_width="wrap_content"
         android:layout_height="300dp"
         android:id="@+id/joystickLeft"
         android:layout_weight="1"/>
 
-    <com.ravensoft.daniel.joysticktest.JoystickView
+    <com.harrysoft.joystickview.JoystickView
         android:layout_width="wrap_content"
         android:layout_height="300dp"
         android:id="@+id/joystickRight"

@@ -22,7 +22,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    // Android Support Library
     implementation 'com.android.support:appcompat-v7:27.1.1'
+
+    // JoystickView library
+    implementation project(path: ':joystickView')
 
     testImplementation 'junit:junit:4.12'
 }

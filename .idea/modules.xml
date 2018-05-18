@@ -5,7 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/JoystickTest.iml" filepath="$PROJECT_DIR$/JoystickTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/JoystickView.iml" filepath="$PROJECT_DIR$/.idea/JoystickView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demoApp/demoApp.iml" filepath="$PROJECT_DIR$/demoApp/demoApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/joystickView/joystickView.iml" filepath="$PROJECT_DIR$/joystickView/joystickView.iml" />
     </modules>
   </component>
 </project>

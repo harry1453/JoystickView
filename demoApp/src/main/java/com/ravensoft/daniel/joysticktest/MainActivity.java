@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.harrysoft.joystickview.JoystickView;
+
 public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener{
 
     @Override

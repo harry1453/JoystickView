@@ -1,4 +1,4 @@
-package com.ravensoft.daniel.joysticktest;
+package com.harrysoft.joystickview;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -13,8 +13,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
-public class JoystickView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener
-{
+public class JoystickView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener {
+
     private float centerX;
     private float centerY;
     private float baseRadius;
