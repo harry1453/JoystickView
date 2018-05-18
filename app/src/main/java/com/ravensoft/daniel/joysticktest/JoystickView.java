@@ -19,7 +19,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     private float centerY;
     private float baseRadius;
     private float hatRadius;
-    private final int ratio = 5; //The smaller, the more shading will occur
+    private static final int ratio = 5; //The smaller, the more shading will occur
 
     @Nullable
     private JoystickListener joystickListener;
@@ -27,35 +27,28 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     private void setupDimensions() {
         centerX = getWidth() / 2;
         centerY = getHeight() / 2;
-        baseRadius = Math.min(getWidth(), getHeight()) / 3;
-        hatRadius = Math.min(getWidth(), getHeight()) / 5;
+        baseRadius = Math.min(getWidth() * 0.93f, getHeight() * 0.93f) / 3;
+        hatRadius = Math.min(getWidth() * 0.93f, getHeight() * 0.93f) / 5;
     }
 
     public JoystickView(Context context) {
         super(context);
-        getHolder().addCallback(this);
-        setOnTouchListener(this);
-
-        makeBackgroundTransparent();
+        setupJoystickView();
     }
 
     public JoystickView(Context context, AttributeSet attributes, int style) {
         super(context, attributes, style);
-        getHolder().addCallback(this);
-        setOnTouchListener(this);
-
-        makeBackgroundTransparent();
+        setupJoystickView();
     }
 
     public JoystickView(Context context, AttributeSet attributes) {
         super(context, attributes);
-        getHolder().addCallback(this);
-        setOnTouchListener(this);
-
-        makeBackgroundTransparent();
+        setupJoystickView();
     }
 
-    private void makeBackgroundTransparent() {
+    private void setupJoystickView() {
+        getHolder().addCallback(this);
+        setOnTouchListener(this);
         this.setBackgroundColor(Color.TRANSPARENT);
         this.setZOrderOnTop(true);
         getHolder().setFormat(PixelFormat.TRANSPARENT);
@@ -75,16 +68,13 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             //Draw the base first before shading
             colors.setARGB(255, 100, 100, 100);
             myCanvas.drawCircle(centerX, centerY, baseRadius, colors);
-            for(int i = 1; i <= (int) (baseRadius / ratio); i++)
-            {
+            for(int i = 1; i <= (int) (baseRadius / ratio); i++) {
                 colors.setARGB(150/i, 255, 0, 0); //Gradually decrease the shade of black drawn to create a nice shading effect
-                myCanvas.drawCircle(newX - cos * hypotenuse * (ratio/baseRadius) * i,
-                        newY - sin * hypotenuse * (ratio/baseRadius) * i, i * (hatRadius * ratio / baseRadius), colors); //Gradually increase the size of the shading effect
+                myCanvas.drawCircle(newX - cos * hypotenuse * (ratio/baseRadius) * i, newY - sin * hypotenuse * (ratio/baseRadius) * i, i * (hatRadius * ratio / baseRadius), colors); //Gradually increase the size of the shading effect
             }
 
             //Drawing the joystick hat
-            for(int i = 0; i <= (int) (hatRadius / ratio); i++)
-            {
+            for(int i = 0; i <= (int) (hatRadius / ratio); i++) {
                 colors.setARGB(255, (int) (i * (255 * ratio / hatRadius)), (int) (i * (255 * ratio / hatRadius)), 255); //Change the joystick color for shading purposes
                 myCanvas.drawCircle(newX, newY, hatRadius - (float) i * (ratio) / 2 , colors); //Draw the shading for the hat
             }
@@ -109,20 +99,14 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
 
     }
 
-    public boolean onTouch(View v, MotionEvent e)
-    {
-        if(v.equals(this))
-        {
-            if(e.getAction() != MotionEvent.ACTION_UP)
-            {
+    public boolean onTouch(View v, MotionEvent e) {
+        if(v.equals(this)) {
+            if(e.getAction() != MotionEvent.ACTION_UP) {
                 float displacement = (float) Math.sqrt((Math.pow(e.getX() - centerX, 2)) + Math.pow(e.getY() - centerY, 2));
-                if(displacement < baseRadius)
-                {
+                if(displacement < baseRadius) {
                     drawJoystick(e.getX(), e.getY());
                     updateListener((e.getX() - centerX)/baseRadius, (e.getY() - centerY)/baseRadius);
-                }
-                else
-                {
+                } else {
                     float ratio = baseRadius / displacement;
                     float constrainedX = centerX + (e.getX() - centerX) * ratio;
                     float constrainedY = centerY + (e.getY() - centerY) * ratio;
