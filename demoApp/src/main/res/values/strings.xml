@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">JoystickTest</string>
+    <string name="app_name">JoystickView Demo</string>
+    <string name="x_pos_format">X: %1$s</string>
+    <string name="y_pos_format">Y: %1$s</string>
 </resources>
