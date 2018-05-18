@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -34,18 +35,30 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
         super(context);
         getHolder().addCallback(this);
         setOnTouchListener(this);
+
+        makeBackgroundTransparent();
     }
 
     public JoystickView(Context context, AttributeSet attributes, int style) {
         super(context, attributes, style);
         getHolder().addCallback(this);
         setOnTouchListener(this);
+
+        makeBackgroundTransparent();
     }
 
     public JoystickView(Context context, AttributeSet attributes) {
         super(context, attributes);
         getHolder().addCallback(this);
         setOnTouchListener(this);
+
+        makeBackgroundTransparent();
+    }
+
+    private void makeBackgroundTransparent() {
+        this.setBackgroundColor(Color.TRANSPARENT);
+        this.setZOrderOnTop(true);
+        getHolder().setFormat(PixelFormat.TRANSPARENT);
     }
 
     private void drawJoystick(float newX, float newY) {
