@@ -1,6 +1,7 @@
 package com.harrysoft.joystickview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Toast;
 
 public class JoystickView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener {
 
@@ -19,6 +21,8 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     private float centerY;
     private float baseRadius;
     private float hatRadius;
+    private int baseA, baseR, baseG, baseB;
+    private int hatA, hatR, hatG, hatB;
     private static final int ratio = 5; //The smaller, the more shading will occur
 
     @Nullable
@@ -39,11 +43,14 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     public JoystickView(Context context, AttributeSet attributes, int style) {
         super(context, attributes, style);
         setupJoystickView();
+        initColors(context, attributes);
     }
 
     public JoystickView(Context context, AttributeSet attributes) {
         super(context, attributes);
         setupJoystickView();
+        initColors(context, attributes);
+
     }
 
     private void setupJoystickView() {
@@ -52,6 +59,28 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
         this.setBackgroundColor(Color.TRANSPARENT);
         this.setZOrderOnTop(true);
         getHolder().setFormat(PixelFormat.TRANSPARENT);
+    }
+
+    public void initColors(Context context, AttributeSet attrs) {
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.JoystickView);
+
+        int base = a.getColor(R.styleable.JoystickView_base_shade_color, 0);
+        int hat = a.getColor(R.styleable.JoystickView_hat_color, 0);
+
+        // Conversion from int to ARGB value
+        baseA = (base >> 24) & 0xff;
+        baseR = (base >> 16) & 0xff;
+        baseG = (base >> 8) & 0xff;
+        baseB = base & 0xff;
+        System.out.println(baseA + ", " + baseR + ", " + baseG + ", " + baseB);
+        hatA = (hat >> 24) & 0xff;
+        hatR = (hat >> 16) & 0xff;
+        hatG = (hat >> 8) & 0xff;
+        hatB = hat & 0xff;
+        System.out.println(hatA + ", " + hatR + ", " + hatG + ", " + hatB);
+
+
+        a.recycle();
     }
 
     private void drawJoystick(float newX, float newY) {
@@ -64,24 +93,26 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             float hypotenuse = (float) Math.sqrt(Math.pow(newX - centerX, 2) + Math.pow(newY - centerY, 2));
             float sin = (newY - centerY) / hypotenuse; //sin = o/h
             float cos = (newX - centerX) / hypotenuse; //cos = a/h
-            
+
             //Draw the base first before shading
             colors.setARGB(255, 100, 100, 100);
             myCanvas.drawCircle(centerX, centerY, baseRadius, colors);
             for(int i = 1; i <= (int) (baseRadius / ratio); i++) {
-                colors.setARGB(150/i, 255, 0, 0); //Gradually decrease the shade of black drawn to create a nice shading effect
+                colors.setARGB(150/i, baseR, baseG, baseB); //Gradually decrease the shade of black drawn to create a nice shading effect
                 myCanvas.drawCircle(newX - cos * hypotenuse * (ratio/baseRadius) * i, newY - sin * hypotenuse * (ratio/baseRadius) * i, i * (hatRadius * ratio / baseRadius), colors); //Gradually increase the size of the shading effect
             }
 
             //Drawing the joystick hat
             for(int i = 0; i <= (int) (hatRadius / ratio); i++) {
-                colors.setARGB(255, (int) (i * (255 * ratio / hatRadius)), (int) (i * (255 * ratio / hatRadius)), 255); //Change the joystick color for shading purposes
+                colors.setARGB(255, (int) (i * (hatR * ratio / hatRadius)), (int) (i * (hatG * ratio / hatRadius)), (int) (i * (hatB * ratio / hatRadius))); //Change the joystick color for shading purposes
                 myCanvas.drawCircle(newX, newY, hatRadius - (float) i * (ratio) / 2 , colors); //Draw the shading for the hat
             }
 
             getHolder().unlockCanvasAndPost(myCanvas); //Write the new drawing to the SurfaceView
         }
     }
+
+
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {

@@ -1,0 +1,6 @@
+<resources>
+    <declare-styleable name="JoystickView">
+        <attr name="base_shade_color" format="boolean|reference" />
+        <attr name="hat_color" format="boolean|reference" />
+    </declare-styleable>
+</resources>

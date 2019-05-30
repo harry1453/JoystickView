@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="horizontal" >
+    xmlns:joystick="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_marginTop="@dimen/margin"
@@ -33,6 +34,8 @@
         <com.harrysoft.joystickview.JoystickView
             android:layout_width="match_parent"
             android:layout_height="@dimen/joystick_height"
+            joystick:base_shade_color="@color/colorAccent"
+            joystick:hat_color="@color/colorAccent"
             android:id="@+id/left_joystick" />
 
     </LinearLayout>
