@@ -36,6 +36,10 @@
             android:layout_height="@dimen/joystick_height"
             joystick:base_shade_color="@color/colorAccent"
             joystick:hat_color="@color/colorAccent"
+            joystick:draw_base="true"
+            joystick:draw_stick_shading="true"
+            joystick:draw_hat_shading="true"
+            joystick:ratio="20"
             android:id="@+id/left_joystick" />
 
     </LinearLayout>
@@ -69,6 +73,12 @@
         <com.harrysoft.joystickview.JoystickView
             android:layout_width="match_parent"
             android:layout_height="@dimen/joystick_height"
+            joystick:base_shade_color="@color/colorAccent"
+            joystick:hat_color="@color/colorAccent"
+            joystick:draw_base="true"
+            joystick:draw_stick_shading="true"
+            joystick:draw_hat_shading="true"
+            joystick:ratio="5"
             android:id="@+id/right_joystick" />
 
     </LinearLayout>
