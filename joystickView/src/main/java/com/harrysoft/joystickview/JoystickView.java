@@ -119,11 +119,15 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
 
             // Drawing the joystick hat
             if (shadeHat) {
-                colors.setARGB(255, hatShadeR, hatShadeG, hatShadeB); // Change the joystick color for shading purposes
-                myCanvas.drawCircle(newX, newY, hatRadius, colors);
+                int numLoops = (int) (hatRadius / ratio);
+                // These are the values that the rgb shade needs to change by each iteration to
+                // get to to a fully white center of the joystick hat
+                int rChange = (255 - hatShadeR) / numLoops;
+                int gChange = (255 - hatShadeG) / numLoops;
+                int bChange = (255 - hatShadeB) / numLoops;
+
                 for (int i = 0; i <= (int) (hatRadius / ratio); i++) {
-                    System.out.println(hatRadius / ratio);
-                    colors.setARGB(i * 2 + 1, 255, 255, 255); // Change the joystick color for shading purposes
+                    colors.setARGB(255, hatShadeR + (i * rChange), hatShadeG + (i * gChange), hatShadeB + (i * bChange)); // Change the joystick color for shading purposes
                     myCanvas.drawCircle(newX, newY, hatRadius - (float) i * (ratio) / 2, colors); //Draw the shading for the hat
                 }
             } else {
