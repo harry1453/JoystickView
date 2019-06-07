@@ -21,7 +21,6 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     private int baseA, baseR, baseG, baseB; // ARGB values for base
     private int hatA, hatR, hatG, hatB; // ARGB values for hat
     private int stickShadeR, stickShadeG, stickShadeB; // ARGB values for stick shade
-    private int hatShadeA, hatShadeR, hatShadeG, hatShadeB; // ARGB values for the hat shade
     private boolean drawBase, shadeBase, shadeHat;
     private int ratio; //The smaller, more shading will occur
 
@@ -62,7 +61,6 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
         int base = a.getColor(R.styleable.JoystickView_base_color, 0);
         int hat = a.getColor(R.styleable.JoystickView_hat_color, 0);
         int stickShade = a.getColor(R.styleable.JoystickView_stick_shade_color, 0);
-        int hatShade = a.getColor(R.styleable.JoystickView_hat_shade_color, 0);
 
         // Conversion from int to ARGB value
         baseA = (base >> 24) & 0xff;
@@ -78,11 +76,6 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
         stickShadeR = (stickShade >> 16) & 0xff;
         stickShadeG = (stickShade >> 8) & 0xff;
         stickShadeB = stickShade & 0xff;
-
-        hatShadeA = (hatShade >> 24) & 0xff;
-        hatShadeR = (hatShade >> 16) & 0xff;
-        hatShadeG = (hatShade >> 8) & 0xff;
-        hatShadeB = hatShade & 0xff;
 
         ratio = a.getInteger(R.styleable.JoystickView_ratio, 5);
         shadeBase = a.getBoolean(R.styleable.JoystickView_draw_stick_shading, true);
@@ -122,12 +115,12 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
                 int numLoops = (int) (hatRadius / ratio);
                 // These are the values that the rgb shade needs to change by each iteration to
                 // get to to a fully white center of the joystick hat
-                int rChange = (255 - hatShadeR) / numLoops;
-                int gChange = (255 - hatShadeG) / numLoops;
-                int bChange = (255 - hatShadeB) / numLoops;
+                int rChange = (255 - hatR) / numLoops;
+                int gChange = (255 - hatG) / numLoops;
+                int bChange = (255 - hatB) / numLoops;
 
                 for (int i = 0; i <= (int) (hatRadius / ratio); i++) {
-                    colors.setARGB(255, hatShadeR + (i * rChange), hatShadeG + (i * gChange), hatShadeB + (i * bChange)); // Change the joystick color for shading purposes
+                    colors.setARGB(255, hatR + (i * rChange), hatG + (i * gChange), hatB + (i * bChange)); // Change the joystick color for shading purposes
                     myCanvas.drawCircle(newX, newY, hatRadius - (float) i * (ratio) / 2, colors); //Draw the shading for the hat
                 }
             } else {
