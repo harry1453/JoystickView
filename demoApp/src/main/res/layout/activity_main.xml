@@ -76,7 +76,7 @@
             android:layout_height="@dimen/joystick_height"
             joystick:stick_shade_color="@color/colorAccent"
             joystick:base_color="@color/colorPrimary"
-            joystick:hat_color="@color/colorAccent"
+            joystick:hat_color="#777777"
             joystick:draw_base="true"
             joystick:draw_stick_shading="true"
             joystick:draw_hat_shading="true"
