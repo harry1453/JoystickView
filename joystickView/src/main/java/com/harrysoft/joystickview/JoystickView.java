@@ -113,8 +113,8 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             // Drawing the joystick hat
             if (shadeHat) {
                 int numLoops = (int) (hatRadius / ratio);
-                // These are the values that the rgb shade needs to change by each iteration to
-                // get to to a fully white center of the joystick hat
+                // These are the values that each rgb shade needs to change by every iteration to
+                // get to a fully white center of the joystick hat
                 int rChange = (255 - hatR) / numLoops;
                 int gChange = (255 - hatG) / numLoops;
                 int bChange = (255 - hatB) / numLoops;
