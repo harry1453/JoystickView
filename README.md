@@ -65,7 +65,12 @@ protected void onCreate(Bundle savedInstanceState) {
 
 ## Customization
 
-To customize your joystick, just add the desired XML to the JoystickView, like this:
+To customize your joystick, just add 
+```XML
+xmlns:joystick="http://schemas.android.com/apk/res-auto"
+```
+
+to your layout, and add the desired XML to the JoystickView like this:
 
 ```XML
 <com.harrysoft.joystickview.JoystickView
