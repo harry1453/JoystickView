@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
         rightY = findViewById(R.id.right_y);
         JoystickView left = findViewById(R.id.left_joystick);
         JoystickView right = findViewById(R.id.right_joystick);
-        
+
         decimalFormat = new DecimalFormat("#.###");
 
         // Initialize display with zero values
