@@ -3,7 +3,8 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:joystick="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:baselineAligned="false">
 
     <LinearLayout
         android:layout_marginTop="@dimen/margin"
@@ -31,16 +32,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <!-- Left JoystickView with default settings -->
         <com.harrysoft.joystickview.JoystickView
             android:layout_width="match_parent"
             android:layout_height="@dimen/joystick_height"
-            joystick:base_color="@color/colorPrimaryDark"
-            joystick:hat_color="@color/colorPrimary"
-            joystick:stick_shade_color="@color/colorAccent"
-            joystick:draw_base="true"
-            joystick:draw_stick_shading="true"
-            joystick:draw_hat_shading="true"
-            joystick:ratio="5"
             android:id="@+id/left_joystick" />
 
     </LinearLayout>
@@ -71,20 +66,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <!-- Right JoystickView showing all possible customizations -->
         <com.harrysoft.joystickview.JoystickView
             android:layout_width="match_parent"
             android:layout_height="@dimen/joystick_height"
+            joystick:base_color="@color/colorRightJoystickBase"
+            joystick:hat_color="@color/colorRightJoystickHat"
+            joystick:stick_shade_color="@color/colorRightJoystickStick"
+            joystick:draw_base="true"
+            joystick:draw_stick_shading="true"
+            joystick:draw_hat_shading="true"
+            joystick:ratio="5"
             android:id="@+id/right_joystick" />
-
-        <!--
-        joystick:stick_shade_color="@color/colorPinkShade"
-        joystick:base_color="@color/colorPrimaryDark"
-        joystick:hat_color="@color/colorPrimary"
-        joystick:draw_base="true"
-        joystick:draw_stick_shading="true"
-        joystick:draw_hat_shading="true"
-        joystick:ratio="5"
-        -->
 
     </LinearLayout>
 

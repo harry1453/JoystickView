@@ -3,5 +3,8 @@
     <color name="colorPrimary">#5E5E92</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#afffff</color>
-    <color name="colorPinkShade">#f442d7</color>
+
+    <color name="colorRightJoystickBase">#401a4f</color>
+    <color name="colorRightJoystickHat">#744682</color>
+    <color name="colorRightJoystickStick">#9f94a3</color>
 </resources>
