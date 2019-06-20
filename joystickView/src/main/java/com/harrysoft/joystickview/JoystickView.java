@@ -21,7 +21,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     private int baseA, baseR, baseG, baseB; // ARGB values for base
     private int hatA, hatR, hatG, hatB; // ARGB values for hat
     private int stickShadeR, stickShadeG, stickShadeB; // ARGB values for stick shade
-    private boolean drawBase, shadeBase, shadeHat;
+    private boolean drawBase, drawStick, shadeHat;
     private int ratio; //The smaller, more shading will occur
 
     @Nullable
@@ -58,9 +58,9 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     public void initAttributes(Context context, AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.JoystickView);
 
-        int base = a.getColor(R.styleable.JoystickView_base_color, 0);
-        int hat = a.getColor(R.styleable.JoystickView_hat_color, 0);
-        int stickShade = a.getColor(R.styleable.JoystickView_stick_shade_color, 0);
+        int base = a.getColor(R.styleable.JoystickView_base_color, Color.parseColor("#303F9F"));
+        int hat = a.getColor(R.styleable.JoystickView_hat_color, Color.parseColor("#5E5E92"));
+        int stickShade = a.getColor(R.styleable.JoystickView_stick_shade_color, Color.parseColor("#afffff"));
 
         // Conversion from int to ARGB value
         baseA = (base >> 24) & 0xff;
@@ -78,7 +78,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
         stickShadeB = stickShade & 0xff;
 
         ratio = a.getInteger(R.styleable.JoystickView_ratio, 5);
-        shadeBase = a.getBoolean(R.styleable.JoystickView_draw_stick_shading, true);
+        drawStick = a.getBoolean(R.styleable.JoystickView_draw_stick_shading, true);
         shadeHat = a.getBoolean(R.styleable.JoystickView_draw_hat_shading, true);
         drawBase = a.getBoolean(R.styleable.JoystickView_draw_base, true);
 
@@ -103,7 +103,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             }
 
             // Draw stick shading
-            if (shadeBase) {
+            if (drawStick) {
                 for (int i = 1; i <= (int) (baseRadius / ratio); i++) {
                     colors.setARGB(150 / i, stickShadeR, stickShadeG, stickShadeB); // Gradually decrease the alpha to create a nice shading effect
                     myCanvas.drawCircle(newX - cos * hypotenuse * (ratio / baseRadius) * i, newY - sin * hypotenuse * (ratio / baseRadius) * i, i * (hatRadius * ratio / baseRadius), colors); // Gradually increase the size of the shading effect

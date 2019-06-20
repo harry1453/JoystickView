@@ -74,14 +74,17 @@
         <com.harrysoft.joystickview.JoystickView
             android:layout_width="match_parent"
             android:layout_height="@dimen/joystick_height"
-            joystick:stick_shade_color="@color/colorHatShade"
-            joystick:base_color="@color/colorPrimaryDark"
-            joystick:hat_color="@color/colorPrimary"
-            joystick:draw_base="true"
-            joystick:draw_stick_shading="true"
-            joystick:draw_hat_shading="true"
-            joystick:ratio="5"
             android:id="@+id/right_joystick" />
+
+        <!--
+        joystick:stick_shade_color="@color/colorPinkShade"
+        joystick:base_color="@color/colorPrimaryDark"
+        joystick:hat_color="@color/colorPrimary"
+        joystick:draw_base="true"
+        joystick:draw_stick_shading="true"
+        joystick:draw_hat_shading="true"
+        joystick:ratio="5"
+        -->
 
     </LinearLayout>
 
